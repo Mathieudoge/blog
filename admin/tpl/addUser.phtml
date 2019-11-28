@@ -1,0 +1,47 @@
+<div class="row">
+  <div class="card col text-white mb-3 p-0">
+      <div class="card-header bg-dark">Formulaire d'ajout utilisateur</div>
+      <div class="card-body bg-white text-dark">
+          <?php if($error != ''):?>
+          <div class="alert alert-danger" role="alert">
+          <?= $error ?>
+          </div>
+          <?php endif;?>
+          <form action="addUser.php" method="POST">
+              <div class="form-group">
+                  <label for="validationTextarea">Nom d'utilisateur</label>
+                  <input type="text" name="username" value="<?= $username ?>" class="form-control <?= ($usernameInvalid == true)?'is-invalid':''?>" id="formGroupExampleInput" required>
+              </div>
+              <div class="mb-3">
+                <label for="formGroupExampleInput">Prénom</label>
+                <input type="text" name="firstname" value="<?= $firstname ?>" class="form-control <?= ($nameInvalid == true)?'is-invalid':''?>" id="formGroupExampleInput" required>
+              </div>
+              <div class="mb-3">
+                <label for="formGroupExampleInput">Nom</label>
+                <input type="text" name="lastname" value="<?= $lastname ?>" class="form-control <?= ($nameInvalid == true)?'is-invalid':''?>" id="formGroupExampleInput" required>
+              </div>
+              <div class="mb-3">
+                <label for="formGroupExampleInput">E-mail</label>
+                <input type="email" name="email" value="<?= $email ?>" class="form-control <?= ($emailInvalid == true)?'is-invalid':''?>" id="formGroupExampleInput" required>
+              </div>
+              <div class="mb-3">
+                  <label for="validationTextarea">Mot de passe</label>
+                  <input type="password" name="password" class="form-control <?= ($passwordInvalid == true)?'is-invalid':''?>" id="formGroupExampleInput" required>
+              </div>
+              <div class="mb-3">
+                  <label for="validationTextarea">Confirmation du mot de passe</label>
+                  <input type="password" name="confirmpass" class="form-control <?= ($passwordInvalid == true)?'is-invalid':''?>" id="formGroupExampleInput" required>
+              </div>
+              <div class="mb-3">
+                <label for="formGroupExampleInput">Avatar</label><small> (facultatif)</small>
+                <input type="text" name="avatar" class="form-control" id="formGroupExampleInput">
+              </div>
+              <div class="mb-3">
+                <label for="formGroupExampleInput">Bio</label><small> (facultatif)</small>
+                <textarea class="form-control" name="bio" value="<?= $bio ?>"id="exampleFormControlTextarea1" rows="3"></textarea>
+              </div>
+              <input type="submit" value="Enregistré">
+          </form>
+      </div>
+  </div>
+</div>       
