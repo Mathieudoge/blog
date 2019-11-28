@@ -40,6 +40,14 @@
                 <label for="formGroupExampleInput">Bio</label><small> (facultatif)</small>
                 <textarea class="form-control" name="bio" value="<?= $bio ?>"id="exampleFormControlTextarea1" rows="3"></textarea>
               </div>
+              <div class="mb-3">
+                <label for="formGroupExampleInput">Rank</label><small> (facultatif)</small>
+                <select name="rank" id="">
+                  <option value="admin">Admin</option>
+                  <option value="author">Auteur</option>
+                  <option value="default">Défaut</option>
+                </select>
+              </div>
               <input type="submit" value="Enregistré">
           </form>
       </div>
