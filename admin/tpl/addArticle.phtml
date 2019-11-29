@@ -11,7 +11,7 @@
             <?= ($error['password'] != '')? '<li>'.$error['password'].'</li>': '' ?>
             </div>
             <?php endif;?>
-            <form action="addUser.php" method="POST">
+            <form action="addArticle.php" method="POST">
                 <div class="form-group">
                     <label for="formGroupExampleInput">Catégorie</label>
                     <select name="category" id="">
@@ -38,9 +38,9 @@
                     </div>
                 <div class="mb-3">
                     <label for="formGroupExampleInput">Visibilité</label>
-                    <select name="visibility" id="">
-                        <option value="ROLE_ADMIN">Publique</option>
-                        <option value="ROLE_AUTHOR">Privée</option>
+                    <select name="status" id="">
+                        <option value="Public">Publique</option>
+                        <option value="Private">Privée</option>
                     </select>
                 </div>
                 <input type="submit" value="Enregistré">

@@ -68,4 +68,4 @@ function checkFormData($username, $data, $email, $firstname, $lastname,$error){
     
     }
     return $error;
-} 
+}
