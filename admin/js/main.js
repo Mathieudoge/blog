@@ -1,16 +1,17 @@
 'use strict'
 
 let deleteUserConfirm;
-
+let test;
 function deleteUser(e){
     e.preventDefault();
-    alert('Êtes-vous sur de vouloir suprimmez cette utilisateur?')
-    console.log(this);
+    $('#modal').modal('show');
+    test = this.href;
 }
-
+function confirmDeleteUser(){
+    location.href =  test
+}
 document.addEventListener('DOMContentLoaded', function(){
-
-    deleteUserConfirm = document.querySelector('.fa-trash-alt')
-    deleteUserConfirm.addEventListener('click', deleteUser);
+    $('.delete').on('click', deleteUser);
+    $('.button').on('click', confirmDeleteUser);
 
 })

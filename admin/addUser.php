@@ -43,22 +43,28 @@ if(isLogged(RANK_ADMIN) == true){
 
         $error = checkFormData($username, $data, $email, $firstname, $lastname, $error);
         if ($error['error'] == ''){
-            $date = new DateTime();
-            $passwordHash = password_hash($password, PASSWORD_DEFAULT);
-            $stmt = $dbh->prepare('INSERT INTO users (avatar, bio, created_date, email, firstname, lastname, password, username, rank)
-            VALUES (:avatar,:bio,:date,:email,:firstname,:lastname,:password,:username, :rank)');
-            $stmt->bindValue('avatar',$avatar);
-            $stmt->bindValue('bio', $bio);
-            $stmt->bindValue('date',$date->format("Y-m-d h:i:s"));
-            $stmt->bindValue('email', $email);
-            $stmt->bindValue('firstname', $firstname);
-            $stmt->bindValue('lastname', $lastname);
-            $stmt->bindValue('password', $passwordHash);
-            $stmt->bindValue('username', $username);
-            $stmt->bindValue('rank', $rank);
-            $stmt->execute();
+            try{
+                $date = new DateTime();
+                $passwordHash = password_hash($password, PASSWORD_DEFAULT);
+                $stmt = $dbh->prepare('INSERT INTO users (avatar, bio, created_date, email, firstname, lastname, password, username, rank)
+                VALUES (:avatar,:bio,:date,:email,:firstname,:lastname,:password,:username, :rank)');
+                $stmt->bindValue('avatar',$avatar);
+                $stmt->bindValue('bio', $bio);
+                $stmt->bindValue('date',$date->format("Y-m-d H:i:s"));
+                $stmt->bindValue('email', $email);
+                $stmt->bindValue('firstname', $firstname);
+                $stmt->bindValue('lastname', $lastname);
+                $stmt->bindValue('password', $passwordHash);
+                $stmt->bindValue('username', $username);
+                $stmt->bindValue('rank', $rank);
+                $stmt->execute();
 
-            header('Location: listUser.php');
+                header('Location: listUser.php');
+            }
+            catch (PDOException $e) {
+                print "Erreur !: " . $e->getMessage() . "<br/>";
+                die();
+            }
         }
     }
 }

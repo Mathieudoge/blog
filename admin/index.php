@@ -5,7 +5,6 @@ include('lib/db.lib.php');
 
 $view = 'index.phtml';
 $error = '';
-var_dump($_SESSION);
 
 
 

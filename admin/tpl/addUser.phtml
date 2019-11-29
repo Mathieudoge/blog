@@ -1,6 +1,6 @@
 <div class="container">
 <div class="row">
-  <div class="card col text-white mb-3 p-0">
+  <div class="card col text-white mb-3 mt-3 p-0">
       <div class="card-header bg-dark">Formulaire d'ajout utilisateur</div>
       <div class="card-body bg-white text-dark">
           <?php if($error['error'] != ''):?>
@@ -47,9 +47,8 @@
               <div class="mb-3">
                 <label for="formGroupExampleInput">Rank</label><small> (facultatif)</small>
                 <select name="rank" id="">
-                  <option value="admin">Admin</option>
-                  <option value="author">Auteur</option>
-                  <option value="default">Défaut</option>
+                  <option value="ROLE_ADMIN">Admin</option>
+                  <option value="ROLE_AUTHOR">Auteur</option>
                 </select>
               </div>
               <input type="submit" value="Enregistré">

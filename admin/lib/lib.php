@@ -13,16 +13,13 @@ function isLogged($accessPower){
 function rankPower(){
 
     switch($_SESSION['user']['rank']){
-        case 'NULL':
-            $rank = RANK_DEFAULT;
+        case 'ROLE_USER':
+            $rank = RANK_USER;
             break;
-        case 'default':
-            $rank = RANK_DEFAULT;
-            break;
-        case 'author':
+        case 'ROLE_AUTHOR':
             $rank = RANK_AUTHOR;
             break;
-        case 'admin':
+        case 'ROLE_ADMIN':
             $rank = RANK_ADMIN;
     }
     return $rank;
