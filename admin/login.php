@@ -19,12 +19,20 @@ if(!isset($_SESSION['logged']) || $_SESSION['logged'] != true){
     $stmt->bindValue('email', $email);
     $stmt->execute();
     $data = $stmt->fetch(PDO::FETCH_ASSOC);
+    $id = $data['id'];
     if($data == false){
         $error = 'Identifiants incorrect';
     }
     else {
         $passConfirm = password_verify($password, $data['password']);
         if($passConfirm == true){
+            $date = new DateTime();
+            $stmt = $dbh->prepare('UPDATE users
+                                    SET last_login_date = :date
+                                    WHERE id = :id ');
+            $stmt->bindValue('id', $id);
+            $stmt->bindValue('date', $date->format("Y-m-d h:i:s"));
+            $stmt->execute();
             $_SESSION['logged'] = true;
             $_SESSION['user'] = ['id'=>$data['id'],'firstname'=>$data['firstname'],'lastname'=>$data['lastname'],'rank' =>$data['rank']];
             header('Location: index.php');

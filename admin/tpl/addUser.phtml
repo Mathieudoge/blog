@@ -1,36 +1,40 @@
+<div class="container">
 <div class="row">
   <div class="card col text-white mb-3 p-0">
       <div class="card-header bg-dark">Formulaire d'ajout utilisateur</div>
       <div class="card-body bg-white text-dark">
-          <?php if($error != ''):?>
+          <?php if($error['error'] != ''):?>
           <div class="alert alert-danger" role="alert">
-          <?= $error ?>
+          <?= ($error['username'] != '')? '<li>'.$error['username'].'</li>': '' ?>
+          <?= ($error['email'] != '')? '<li>'.$error['email'].'</li>': '' ?>
+          <?= ($error['name'] != '')? '<li>'.$error['name'].'</li>': '' ?>
+          <?= ($error['password'] != '')? '<li>'.$error['password'].'</li>': '' ?>
           </div>
           <?php endif;?>
           <form action="addUser.php" method="POST">
               <div class="form-group">
                   <label for="validationTextarea">Nom d'utilisateur</label>
-                  <input type="text" name="username" value="<?= $username ?>" class="form-control <?= ($usernameInvalid == true)?'is-invalid':''?>" id="formGroupExampleInput" required>
+                  <input type="text" name="username" value="<?= $username ?>" class="form-control <?= ($error['username'] != '')?'is-invalid':''?>" id="formGroupExampleInput" required>
               </div>
               <div class="mb-3">
                 <label for="formGroupExampleInput">Prénom</label>
-                <input type="text" name="firstname" value="<?= $firstname ?>" class="form-control <?= ($nameInvalid == true)?'is-invalid':''?>" id="formGroupExampleInput" required>
+                <input type="text" name="firstname" value="<?= $firstname ?>" class="form-control <?= ($error['name'] != '')?'is-invalid':''?>" id="formGroupExampleInput" required>
               </div>
               <div class="mb-3">
                 <label for="formGroupExampleInput">Nom</label>
-                <input type="text" name="lastname" value="<?= $lastname ?>" class="form-control <?= ($nameInvalid == true)?'is-invalid':''?>" id="formGroupExampleInput" required>
+                <input type="text" name="lastname" value="<?= $lastname ?>" class="form-control <?= ($error['name'] != '')?'is-invalid':''?>" id="formGroupExampleInput" required>
               </div>
               <div class="mb-3">
                 <label for="formGroupExampleInput">E-mail</label>
-                <input type="email" name="email" value="<?= $email ?>" class="form-control <?= ($emailInvalid == true)?'is-invalid':''?>" id="formGroupExampleInput" required>
+                <input type="email" name="email" value="<?= $email ?>" class="form-control <?= ($error['email'] != '')?'is-invalid':''?>" id="formGroupExampleInput" required>
               </div>
               <div class="mb-3">
                   <label for="validationTextarea">Mot de passe</label>
-                  <input type="password" name="password" class="form-control <?= ($passwordInvalid == true)?'is-invalid':''?>" id="formGroupExampleInput" required>
+                  <input type="password" name="password" class="form-control <?= ($error['password'] != '')?'is-invalid':''?>" id="formGroupExampleInput" required>
               </div>
               <div class="mb-3">
                   <label for="validationTextarea">Confirmation du mot de passe</label>
-                  <input type="password" name="confirmpass" class="form-control <?= ($passwordInvalid == true)?'is-invalid':''?>" id="formGroupExampleInput" required>
+                  <input type="password" name="confirmpass" class="form-control <?= ($error['password'] != '')?'is-invalid':''?>" id="formGroupExampleInput" required>
               </div>
               <div class="mb-3">
                 <label for="formGroupExampleInput">Avatar</label><small> (facultatif)</small>
@@ -52,4 +56,5 @@
           </form>
       </div>
   </div>
-</div>       
+</div>
+</div>      

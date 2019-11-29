@@ -7,7 +7,12 @@ include('lib/lib.php');
 session_start();
 
 $view = 'addUser.phtml';
-$error = '';
+$error = [];
+$error['username'] = '';
+$error['email'] = '';
+$error['name'] = '';
+$error['password'] = '';
+$error['error'] = '';
 $username = '';
 $firstname = '';
 $lastname = '';
@@ -15,17 +20,9 @@ $password = '';
 $confirmpass = '';
 $email = '';
 $bio = '';
-$nameInvalid = false;
-$usernameInvalid = false;
-$emailInvalid = false;
-$passwordInvalid = false;
 
-if(!isset($_SESSION['logged']) || $_SESSION['logged'] != true || $_SESSION['user']['rank'] != 'admin'){
-    $error = 'Vous ne pouvez pas accédez a cette page car vous n\'êtes pas connecté ou vous ne disposez pas des droits suffisants';
-    header('Location: index.php');
-}
 
-if(isLogged() == true){
+if(isLogged(RANK_ADMIN) == true){
     if(array_key_exists('username', $_POST)){
         $username = $_POST['username'];
         $firstname = $_POST['firstname'];
@@ -44,48 +41,8 @@ if(isLogged() == true){
         $stmt->execute();
         $data = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if(strlen($username) > USERNAME_MAX){
-            $usernameInvalid = true;
-            $error = 'Le nom d\'utilisateur est trop long (maximum ' . USERNAME_MAX . ' caractères)';
-        }
-        else if (strlen($username) < USERNAME_MIN){
-            $usernameInvalid = true;
-            $error = 'Le nom d\'utilisateur est trop court (minimum ' . USERNAME_MIN . ' caractères)';
-        }
-        else if (ctype_alnum($username) == false){
-            $usernameInvalid = true;
-            $error = 'Le nom d\'utilisateur contient des caractères invalide';
-        }
-        else if($username == $data['username']){
-            $usernameInvalid = true;
-            $error = 'Le nom d\'utilisateur est déjà utilisé';  
-        }
-        if($email == $data['email']){
-            $emailInvalid = true;
-            $error = 'L\'email est déjà utilisé';
-        }
-        else if(filter_var($email, FILTER_VALIDATE_EMAIL) == false){
-            $emailInvalid = true;
-            $error = 'L\'email est invalide';
-        }
-        if (ctype_alpha($firstname) == false || ctype_alpha($lastname) == false){
-            $nameInvalid = true;
-            $error = 'Le nom ou prénom contient des caractères invalide';
-        }
-        if(strlen($_POST['password']) < PASSWORD_MIN){
-            $passwordInvalid = true;
-            $error = 'Le mot de passe est trop faible (minimum ' . PASSWORD_MIN . ' caractères)'; 
-        } 
-        if ($_POST['password'] != $_POST['confirmpass']){
-            $passwordInvalid = true;
-            $error = 'Le mot de passe est différent entre les 2 champs';
-        }
-        if($_POST['username'] == $_POST['password']){
-            $passwordInvalid = true;
-            $error = 'Le mot de passe est similaire au nom d\'utilisateur';
-        
-        }
-        if ($error == ''){
+        $error = checkFormData($username, $data, $email, $firstname, $lastname, $error);
+        if ($error['error'] == ''){
             $date = new DateTime();
             $passwordHash = password_hash($password, PASSWORD_DEFAULT);
             $stmt = $dbh->prepare('INSERT INTO users (avatar, bio, created_date, email, firstname, lastname, password, username, rank)

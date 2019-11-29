@@ -1,17 +1,19 @@
 <?php
+session_start();
 include('config/config.php');
 include('lib/db.lib.php');
+include('lib/lib.php');
 
-if(!isset($_SESSION['logged']) || $_SESSION['logged'] != true || $_SESSION['user']['rank'] != 'admin'){
-    $error = 'Vous ne pouvez pas accédez a cette page car vous n\'êtes pas connecté ou vous ne disposez pas des droits suffisants';
-    header('Location: index.php');
-}
-else{
+if (isLogged(RANK_ADMIN) == true){
     $view = 'listUser.phtml';
 
-
-
-
+    $dbh = connexion();
+    $stmt = $dbh->prepare('SELECT id, username, email, firstname, lastname, bio, created_date, last_login_date, rank, avatar
+                            FROM users');
+    $stmt->execute();
+    $usersData = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     include('tpl/layout.phtml');
+
+    // DELETE FROM `users` WHERE `users`.`id` = 22
 }

@@ -1,0 +1,35 @@
+<script src="js/main.js"></script>
+<div class="row m-5">
+    <table class="table col table-striped table-dark">
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Nom d'utilisateur</th>
+                    <th scope="col">E-mail</th>
+                    <th scope="col">Prénom</th>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Date de création</th>
+                    <th scope="col">Dernière connexion</th>
+                    <th scope="col">Rank</th>
+                    <th scope="col">Avatar</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach($usersData as $userData): ?>
+                <tr>
+                    <td><?= $userData['id']?></td>
+                    <td><?= $userData['username']?></td>
+                    <td><?= $userData['email']?></td>
+                    <td><?= $userData['firstname']?></td>
+                    <td><?= $userData['lastname']?></td>
+                    <td><?= $userData['created_date']?></td>
+                    <td><?= $userData['last_login_date']?></td>
+                    <td><?= $userData['rank']?></td>
+                    <td><?= $userData['avatar']?></td>
+                    <td><a href="#"><i class="fas fa-trash-alt mr-2"></i></a><a href="#"><i class="fas fa-edit"></i></a></td>
+                </tr>
+                <?php endforeach ?>
+            </tbody>
+    </table>
+</div>
