@@ -1,0 +1,51 @@
+<div class="container">
+<div class="row">
+    <div class="card col text-white mb-3 mt-3 p-0">
+        <div class="card-header bg-dark">Formulaire d'ajout article</div>
+        <div class="card-body bg-white text-dark">
+            <?php if($error != ''):?>
+            <div class="alert alert-danger" role="alert">
+            <?= ($error['username'] != '')? '<li>'.$error['username'].'</li>': '' ?>
+            <?= ($error['email'] != '')? '<li>'.$error['email'].'</li>': '' ?>
+            <?= ($error['name'] != '')? '<li>'.$error['name'].'</li>': '' ?>
+            <?= ($error['password'] != '')? '<li>'.$error['password'].'</li>': '' ?>
+            </div>
+            <?php endif;?>
+            <form action="addUser.php" method="POST">
+                <div class="form-group">
+                    <label for="formGroupExampleInput">Catégorie</label>
+                    <select name="category" id="">
+                    <?php foreach($categories as $category): ?>
+                    <option value="<?= $category['name'] ?>"><?= $category['name'] ?></option>
+                    <?php endforeach ?>
+                    </select>
+                <div class="mb-3">
+                    <label for="validationTextarea">Titre de l'article</label>
+                    <input type="text" name="title" class="form-control <?= ($error != '')?'is-invalid':''?>" id="formGroupExampleInput" required>
+                </div>
+                <div class="mb-3">
+                    <label for="formGroupExampleInput">Contenue de l'article</label>
+                    <textarea class="form-control" name="content" <?= ($error != '')?'is-invalid':''?> id="exampleFormControlTextarea1" rows="3" required></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="formGroupExampleInput">Sous-titre de l'article</label><small> (falcultatif)</small>
+                    <input type="text" name="substitle" class="form-control <?= ($error != '')?'is-invalid':''?>" id="formGroupExampleInput">
+                </div>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleFormControlFile1">Image</label><small> (falcultatif)</small>
+                    <input type="file" name="image" class="form-control-file" id="exampleFormControlFile1">
+                    </div>
+                <div class="mb-3">
+                    <label for="formGroupExampleInput">Visibilité</label>
+                    <select name="visibility" id="">
+                        <option value="ROLE_ADMIN">Publique</option>
+                        <option value="ROLE_AUTHOR">Privée</option>
+                    </select>
+                </div>
+                <input type="submit" value="Enregistré">
+            </form>
+        </div>
+    </div>
+</div>
+</div>      

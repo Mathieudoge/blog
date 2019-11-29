@@ -1,0 +1,21 @@
+<div class="container">
+<div class="row">
+    <div class="card col text-white mb-3 mt-3 p-0">
+        <div class="card-header bg-dark">Formulaire d'ajout article</div>
+        <div class="card-body bg-white text-dark">
+            <?php if($error != ''):?>
+            <div class="alert alert-danger" role="alert">
+            <?= ($error != '')? '<li>'.$error.'</li>': '' ?>
+            </div>
+            <?php endif;?>
+            <form action="addCategory.php" method="POST">
+                <div class="form-group">
+                    <label for="validationTextarea">Nouvelle catégorie</label>
+                    <input type="text" name="category" class="form-control <?= ($error != '')?'is-invalid':''?>" id="formGroupExampleInput" required>
+                </div>
+                <input type="submit" value="Enregistré">
+            </form>
+        </div>
+    </div>
+</div>
+</div>      
