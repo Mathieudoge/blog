@@ -10,23 +10,26 @@ session_start();
 if(isLogged(RANK_ADMIN) == true){
     $dbh = connexion();
     $stmt = $dbh->prepare('SELECT name, id
-                            FROM categories');
+                                FROM categories');
     $stmt->execute();
     $categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
     if(array_key_exists('category', $_POST)){
-        foreach($categories as $category){
-            $id = $category['id'];
-        }
+
+        $getCategory = $_POST['category'];
         $title = $_POST['title'];
         $content = $_POST['content'];
         $substitle = $_POST['substitle'];
         $image = $_POST['image'];
-        if($_POST['status'] == 'Private'){
-            $status = 0;
-        }
-        else{
-            $status = 1;
-       }
+        $status = $_POST['status'];
+
+        $stmt = $dbh->prepare('SELECT name, id
+                                FROM categories
+                                WHERE name = :name');
+        $stmt->bindValue('name', $getCategory);
+        $stmt->execute();
+        $category = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        $idCategory = $category['id'];
         if($error == ''){
             try{
             $date = new DateTime();
@@ -37,7 +40,7 @@ if(isLogged(RANK_ADMIN) == true){
             $stmt->bindValue('content', $content);
             $stmt->bindValue('substitle', $substitle);
             $stmt->bindValue('status', $status);
-            $stmt->bindValue('category', $id);
+            $stmt->bindValue('category', $idCategory);
             $stmt->execute();
             }
             catch (PDOException $e) {
