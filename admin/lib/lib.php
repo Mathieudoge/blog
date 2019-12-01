@@ -69,3 +69,27 @@ function checkFormData($username, $data, $email, $firstname, $lastname,$error){
     }
     return $error;
 }
+
+function deleteContent($table){
+    var_dump($table);
+    if(isLogged(RANK_ADMIN) == true){
+        if (array_key_exists('id', $_GET)){
+         $id = $_GET['id'];  
+         var_dump($_GET);
+         try{
+             $dbh = connexion();
+             $stmt = $dbh->prepare('DELETE FROM ' . $table . ' 
+                                     WHERE id = :id');
+             $stmt->bindValue('id', $id);
+             $stmt->execute();
+         }
+         catch (PDOException $e) {
+             print "Erreur !: " . $e->getMessage() . "<br/>";
+             die();
+         }
+     
+         header('Location: listArticle.php');
+     } 
+     }
+     
+}

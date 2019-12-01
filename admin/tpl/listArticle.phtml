@@ -4,15 +4,14 @@
             <thead>
                 <tr>
                     <th scope="col">Id</th>
-                    <th scope="col"></th>
-                    <th scope="col">E-mail</th>
-                    <th scope="col">Prénom</th>
-                    <th scope="col">Nom</th>
+                    <th scope="col">Titre</th>
+                    <th scope="col">Contenue</th>
+                    <th scope="col">Sous-titre</th>
+                    <th scope="col">Image</th>
                     <th scope="col">Date de création</th>
-                    <th scope="col">Dernière connexion</th>
-                    <th scope="col">Rank</th>
-                    <th scope="col">Avatar</th>
-                    <th scope="col">Action</th>
+                    <th scope="col">Date de publication</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Catégorie</th>
                 </tr>
             </thead>
             <tbody>
@@ -27,7 +26,7 @@
                     <td><?= $article['published_date']?></td>
                     <td><?= $article['status']?></td>
                     <td><?= $article['categories_id']?></td>
-                    <td><a href="deleteUser.php?id=<?= $article['id']?>" class="delete"><i class="fas fa-trash-alt mr-2"></i></a><a href="deleteUser.php?id<?= $article['id'] ?>"><i class="fas fa-edit"></i></a></td>
+                    <td><a href="listArticle.php?id=<?= $article['id']?>" class="delete"><i class="fas fa-trash-alt mr-2"></i></a><a href="deleteUser.php?id<?= $article['id'] ?>"><i class="fas fa-edit"></i></a></td>
                 </tr>
                 <?php endforeach ?>
             </tbody>

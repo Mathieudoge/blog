@@ -22,6 +22,4 @@ if (isLogged(RANK_ADMIN) == true){
     }
 
     include('tpl/layout.phtml');
-
-    // DELETE FROM `users` WHERE `users`.`id` = 22
 }
