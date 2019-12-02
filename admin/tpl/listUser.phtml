@@ -27,7 +27,7 @@
                     <td><?= $userData['last_login_date']?></td>
                     <td><?= $userData['rank']?></td>
                     <td><?= $userData['avatar']?></td>
-                    <td><a href="deleteUser.php?id=<?= $userData['id']?>" class="delete"><i class="fas fa-trash-alt mr-2"></i></a><a href="deleteUser.php?id<?= $userData['id'] ?>"><i class="fas fa-edit"></i></a></td>
+                    <td><a href="listUser.php?id=<?= $userData['id']?>" class="delete"><i class="fas fa-trash-alt mr-2"></i></a><a href="deleteUser.php?id<?= $userData['id'] ?>"><i class="fas fa-edit"></i></a></td>
                 </tr>
                 <?php endforeach ?>
             </tbody>
@@ -44,6 +44,7 @@
       </div>
       <div class="modal-body">
         <p>Êtes-vous sur de vouloir suprimmez cette utilisateur?</p>
+        <p>Cette action est irréversible !</p>
       </div>
       <div class="modal-footer">
         <a class="btn btn-primary button">Oui</a>

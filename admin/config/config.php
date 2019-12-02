@@ -9,6 +9,7 @@ const CATEGORY_MAX = 45;
 const RANK_USER = 0;
 const RANK_AUTHOR = 1;
 const RANK_ADMIN = 2;
+const IMAGE_SIZE_MAX = 2000000;
 
 
 

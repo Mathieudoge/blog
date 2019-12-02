@@ -68,4 +68,46 @@ function checkFormData($username, $data, $email, $firstname, $lastname,$error){
     
     }
     return $error;
-} 
+}
+
+function deleteContent($table){
+        if (array_key_exists('id', $_GET)){
+         $id = $_GET['id'];  
+         var_dump($_GET);
+         try{
+             $dbh = connexion();
+             $stmt = $dbh->prepare('DELETE FROM ' . $table . ' 
+                                     WHERE id = :id');
+             $stmt->bindValue('id', $id);
+             $stmt->execute();
+         }
+         catch (PDOException $e) {
+             print "Erreur !: " . $e->getMessage() . "<br/>";
+             die();
+         }
+     } 
+     
+}
+function addImage(){
+    $image = [];
+    $image['error'] = '';
+    $image['image'] = uniqid().''.basename($_FILES["image"]["name"]);
+    $target_dir = "images/";
+    $target_file = $target_dir.$image['image'];
+
+    if (file_exists($target_file)){
+        $image['error'] = 'Erreur dans la base de données,réessayer plus tard';
+    }
+    if ($_FILES["image"]["size"] > IMAGE_SIZE_MAX){
+        $image['error'] = 'Image trop volumineuse (max ' . IMAGE_SIZE_MAX . ' octets)';
+    }
+
+    if ($image['error'] == ''){
+        move_uploaded_file($_FILES["image"]["tmp_name"], $target_file); 
+    }
+    return $image;
+}
+
+function displayImage($image){
+    
+}

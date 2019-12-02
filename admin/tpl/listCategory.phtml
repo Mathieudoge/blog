@@ -1,0 +1,41 @@
+<script src="js/main.js"></script>
+<div class="row m-3">
+    <table class="table col table-striped table-dark">
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Nom de la catégorie</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach($categories as $category): ?>
+                <tr>
+                    <td><?= $category['id']?></td>
+                    <td><?= $category['name']?></td>
+                    <td><a href="listCategory.php?id=<?= $category['id']?>" class="delete"><i class="fas fa-trash-alt mr-2"></i></a><a href="deleteUser.php?id<?= $category['id'] ?>"><i class="fas fa-edit"></i></a></td>
+                </tr>
+                <?php endforeach ?>
+            </tbody>
+    </table>
+</div>
+<div class="modal" id="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Supression de la catégorie</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Êtes-vous sur de vouloir suprimmez cette catégorie ?</p>
+        <p>Cette action est irréversible !</p>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-primary button">Oui</a>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Non</button>
+      </div>
+    </div>
+  </div>
+</div>

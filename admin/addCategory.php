@@ -1,13 +1,12 @@
 <?php 
-
+session_start();
 include('config/config.php');
 include('lib/db.lib.php');
 include('lib/lib.php');
 
 $view = 'addCategory.phtml';
 $error = '';
-session_start();
-if(isLogged(RANK_ADMIN) == true){
+if(isLogged(RANK_AUTHOR) == true){
     if(array_key_exists('category', $_POST)){
 
         $category = $_POST['category'];
@@ -24,6 +23,7 @@ if(isLogged(RANK_ADMIN) == true){
                                     VALUES (:category)');
             $stmt->bindValue('category', $category);
             $stmt->execute();
+            header('Location: listCategory.php');
         }
     }
     

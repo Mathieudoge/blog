@@ -5,13 +5,10 @@
         <div class="card-body bg-white text-dark">
             <?php if($error != ''):?>
             <div class="alert alert-danger" role="alert">
-            <?= ($error['username'] != '')? '<li>'.$error['username'].'</li>': '' ?>
-            <?= ($error['email'] != '')? '<li>'.$error['email'].'</li>': '' ?>
-            <?= ($error['name'] != '')? '<li>'.$error['name'].'</li>': '' ?>
-            <?= ($error['password'] != '')? '<li>'.$error['password'].'</li>': '' ?>
+            <?= ($error != '')? '<li>'.$error.'</li>': '' ?>
             </div>
             <?php endif;?>
-            <form action="addUser.php" method="POST">
+            <form action="addArticle.php" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="formGroupExampleInput">Catégorie</label>
                     <select name="category" id="">
@@ -21,15 +18,15 @@
                     </select>
                 <div class="mb-3">
                     <label for="validationTextarea">Titre de l'article</label>
-                    <input type="text" name="title" class="form-control <?= ($error != '')?'is-invalid':''?>" id="formGroupExampleInput" required>
+                    <input type="text" name="title" class="form-control" id="formGroupExampleInput" required>
                 </div>
                 <div class="mb-3">
                     <label for="formGroupExampleInput">Contenue de l'article</label>
-                    <textarea class="form-control" name="content" <?= ($error != '')?'is-invalid':''?> id="exampleFormControlTextarea1" rows="3" required></textarea>
+                    <textarea class="form-control" name="content" id="exampleFormControlTextarea1" rows="3" required></textarea>
                 </div>
                 <div class="mb-3">
                     <label for="formGroupExampleInput">Sous-titre de l'article</label><small> (falcultatif)</small>
-                    <input type="text" name="substitle" class="form-control <?= ($error != '')?'is-invalid':''?>" id="formGroupExampleInput">
+                    <input type="text" name="substitle" class="form-control" id="formGroupExampleInput">
                 </div>
                 </div>
                 <div class="mb-3">
@@ -38,9 +35,9 @@
                     </div>
                 <div class="mb-3">
                     <label for="formGroupExampleInput">Visibilité</label>
-                    <select name="visibility" id="">
-                        <option value="ROLE_ADMIN">Publique</option>
-                        <option value="ROLE_AUTHOR">Privée</option>
+                    <select name="status" id="">
+                        <option value="0">Publique</option>
+                        <option value="1">Privée</option>
                     </select>
                 </div>
                 <input type="submit" value="Enregistré">
