@@ -26,8 +26,8 @@
                     <td><?= $userData['created_date']?></td>
                     <td><?= $userData['last_login_date']?></td>
                     <td><?= $userData['rank']?></td>
-                    <td><?= $userData['avatar']?></td>
-                    <td><a href="listUser.php?id=<?= $userData['id']?>" class="delete"><i class="fas fa-trash-alt mr-2"></i></a><a href="deleteUser.php?id<?= $userData['id'] ?>"><i class="fas fa-edit"></i></a></td>
+                    <td><?= (file_exists('../images/users/'.$userData['avatar']) && $userData['avatar'] != NULL)?'<img width="150" src="../images/users/' . $userData['avatar'] . '">':'Avatar inexistant'?></td>
+                    <td><a href="delUser.php?id=<?= $userData['id']?>" class="delete"><i class="fas fa-trash-alt mr-2"></i></a><a href="deleteUser.php?id<?= $userData['id'] ?>"><i class="fas fa-edit"></i></a></td>
                 </tr>
                 <?php endforeach ?>
             </tbody>

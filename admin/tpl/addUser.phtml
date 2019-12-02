@@ -9,9 +9,10 @@
           <?= ($error['email'] != '')? '<li>'.$error['email'].'</li>': '' ?>
           <?= ($error['name'] != '')? '<li>'.$error['name'].'</li>': '' ?>
           <?= ($error['password'] != '')? '<li>'.$error['password'].'</li>': '' ?>
+          <?= ($error['avatar'] != '')? '<li>'.$error['avatar'].'</li>': '' ?>
           </div>
           <?php endif;?>
-          <form action="addUser.php" method="POST">
+          <form action="addUser.php" method="POST" enctype="multipart/form-data">
               <div class="form-group">
                   <label for="validationTextarea">Nom d'utilisateur</label>
                   <input type="text" name="username" value="<?= $username ?>" class="form-control <?= ($error['username'] != '')?'is-invalid':''?>" id="formGroupExampleInput" required>
@@ -37,9 +38,9 @@
                   <input type="password" name="confirmpass" class="form-control <?= ($error['password'] != '')?'is-invalid':''?>" id="formGroupExampleInput" required>
               </div>
               <div class="mb-3">
-                <label for="formGroupExampleInput">Avatar</label><small> (facultatif)</small>
-                <input type="text" name="avatar" class="form-control" id="formGroupExampleInput">
-              </div>
+                    <label for="exampleFormControlFile1">Avatar</label><small> (falcultatif)</small>
+                    <input type="file" name="image" class="form-control-file" id="exampleFormControlFile1">
+                    </div>
               <div class="mb-3">
                 <label for="formGroupExampleInput">Bio</label><small> (facultatif)</small>
                 <textarea class="form-control" name="bio" value="<?= $bio ?>"id="exampleFormControlTextarea1" rows="3"></textarea>

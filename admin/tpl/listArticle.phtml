@@ -22,12 +22,12 @@
                     <td><?= $article['title']?></td>
                     <td class="w-25"><?= $article['content']?></td>
                     <td><?= $article['substitle']?></td>
-                    <td><?= (file_exists('images/'.$article['image']) && $article['image'] != NULL)?'<img width="150" src="images/' . $article['image'] . '">':'Image inexistante'?></td>
+                    <td><?= (file_exists('../images/articles/'.$article['image']) && $article['image'] != NULL)?'<img width="150" src="../images/articles/' . $article['image'] . '">':'Image inexistante'?></td>
                     <td><?= $article['created_date']?></td>
                     <td><?= $article['published_date']?></td>
-                    <td><?= $article['status']?></td>
-                    <td><?= $article['categories_id']?></td>
-                    <td><a href="listArticle.php?id=<?= $article['id']?>" class="delete"><i class="fas fa-trash-alt mr-2"></i></a><a href="deleteUser.php?id<?= $article['id'] ?>"><i class="fas fa-edit"></i></a></td>
+                    <td><?= ($article['status'] == 0)? 'Privée' : 'Public'?></td>
+                    <td><?= $article['name']?></td>
+                    <td><a href="delArticle.php?id=<?= $article['id']?>" class="delete"><i class="fas fa-trash-alt mr-2"></i></a><a href="listArticle.php?id=<?= $article['id'] ?>" class="edit"><i class="fas fa-edit"></i></a></td>
                 </tr>
                 <?php endforeach ?>
             </tbody>

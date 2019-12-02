@@ -1,11 +1,9 @@
 <?php 
-
+session_start();
 include('config/config.php');
 include('lib/db.lib.php');
 include('lib/lib.php');
-
-session_start();
-
+include('../models/user.php');
 $view = 'addUser.phtml';
 $error = [];
 $error['username'] = '';
@@ -21,61 +19,73 @@ $confirmpass = '';
 $email = '';
 $bio = '';
 
+try{
+    if(isLogged(RANK_ADMIN) == true){
+        if(array_key_exists('username', $_POST)){
+            $username = $_POST['username'];
+            $firstname = $_POST['firstname'];
+            $lastname = $_POST['lastname'];
+            $password = $_POST['password'];
+            $email = $_POST['email'];
+            $bio = $_POST['bio'];
+            $avatar = addImage('../images/users/');
+            $error['avatar'] = $avatar['error'];
+            $error['error'] = $avatar['error'];
+            $rank = $_POST['rank'];
+            $data = checkDuplicateUser($username, $email);
 
-if(isLogged(RANK_ADMIN) == true){
-    if(array_key_exists('username', $_POST)){
-        $username = $_POST['username'];
-        $firstname = $_POST['firstname'];
-        $lastname = $_POST['lastname'];
-        $password = $_POST['password'];
-        $email = $_POST['email'];
-        $bio = $_POST['bio'];
-        $avatar = $_POST['avatar'];
-        $rank = $_POST['rank'];
-        $dbh = connexion();
-        $stmt = $dbh->prepare('SELECT username, email 
-                                FROM users
-                                WHERE username = :username OR email = :email');
-        $stmt->bindValue('username', $username);
-        $stmt->bindValue('email', $email);
-        $stmt->execute();
-        $data = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        $error = checkFormData($username, $data, $email, $firstname, $lastname, $error);
-        if ($error['error'] == ''){
-            try{
+            if(strlen($username) > USERNAME_MAX){
+                $error['username'] = 'Le nom d\'utilisateur est trop long (maximum ' . USERNAME_MAX . ' caractères)';
+                $error['error'] = 'true';
+            }
+            else if (strlen($username) < USERNAME_MIN){
+                $error['username'] = 'Le nom d\'utilisateur est trop court (minimum ' . USERNAME_MIN . ' caractères)';
+                $error['error'] = 'true';
+            }
+            else if (ctype_alnum($username) == false){
+                $error['username'] = 'Le nom d\'utilisateur contient des caractères invalide';
+                $error['error'] = 'true';
+            }
+            else if($username == $data['username']){
+                $error['username'] = 'Le nom d\'utilisateur est déjà utilisé';
+                $error['error'] = 'true';  
+            }
+            if($email == $data['email']){
+                $error['email'] = 'L\'email est déjà utilisé';
+                $error['error'] = 'true';
+            }
+            else if(filter_var($email, FILTER_VALIDATE_EMAIL) == false){
+                $error['email'] = 'L\'email est invalide';
+                $error['error'] = 'true';
+            }
+            if (ctype_alpha($firstname) == false || ctype_alpha($lastname) == false){
+                $error['name'] = 'Le nom ou prénom contient des caractères invalide';
+                $error['error'] = 'true';
+            }
+            if(strlen($_POST['password']) < PASSWORD_MIN){
+                $error['password'] = 'Le mot de passe est trop faible (minimum ' . PASSWORD_MIN . ' caractères)';
+                $error['error'] = 'true'; 
+            } 
+            if ($_POST['password'] != $_POST['confirmpass']){
+                $error['password'] = 'Le mot de passe est différent entre les 2 champs';
+                $error['error'] = 'true';
+            }
+            if($_POST['username'] == $_POST['password']){
+                $error['password'] = 'Le mot de passe est similaire au nom d\'utilisateur';
+                $error['error'] = 'true';
+            }
+            if ($error['error'] == ''){
                 $date = new DateTime();
                 $passwordHash = password_hash($password, PASSWORD_DEFAULT);
-                $stmt = $dbh->prepare('INSERT INTO users (avatar, bio, created_date, email, firstname, lastname, password, username, rank)
-                VALUES (:avatar,:bio,:date,:email,:firstname,:lastname,:password,:username, :rank)');
-                $stmt->bindValue('avatar',$avatar);
-                $stmt->bindValue('bio', $bio);
-                $stmt->bindValue('date',$date->format("Y-m-d H:i:s"));
-                $stmt->bindValue('email', $email);
-                $stmt->bindValue('firstname', $firstname);
-                $stmt->bindValue('lastname', $lastname);
-                $stmt->bindValue('password', $passwordHash);
-                $stmt->bindValue('username', $username);
-                $stmt->bindValue('rank', $rank);
-                $stmt->execute();
-
+                addUser($avatar['image'],$bio,$date->format('Y-m-d H:i:s'),$email,$firstname,$lastname,$passwordHash,$username,$rank);
                 header('Location: listUser.php');
-            }
-            catch (PDOException $e) {
-                print "Erreur !: " . $e->getMessage() . "<br/>";
-                die();
+                exit();     
             }
         }
+        include('tpl/layout.phtml');
     }
 }
-// function refill(){
-//     var_dump($_POST);
-//     $username = $_POST['username'];
-//     $email = $_POST['email'];
-//     $bio = $_POST['bio'];
-// }
-
-
-// INSERT INTO users (avatar, bio, created_date, email, firstname, lastname, password, username)
-// VALUES ('coucou', 'je suis le grand méchant loup', CURRENT_TIMESTAMP, 'coucou@gmail.com', 'Patrick', 'Sébastien', 'superpatrick', 'Patricia2003')
-include('tpl/layout.phtml');
+catch (PDOException $e) {
+    print "Erreur !: " . $e->getMessage() . "<br/>";
+    die();
+}

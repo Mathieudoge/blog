@@ -1,17 +1,23 @@
 'use strict'
 
 let deleteUserConfirm;
-let test;
-function deleteUser(e){
+let redirection;
+function deleteConfirm(e){
     e.preventDefault();
     $('#modal').modal('show');
-    test = this.href;
+    redirection = this.href;
 }
-function confirmDeleteUser(){
-    location.href =  test
+function edit(e){
+    e.preventDefault();
+    $('#modal').modal('show');
+    redirection = this.href;
+}
+function confirm(){
+    location.href =  redirection
 }
 document.addEventListener('DOMContentLoaded', function(){
-    $('.delete').on('click', deleteUser);
-    $('.button').on('click', confirmDeleteUser);
+    $('.delete').on('click', deleteUConfirm);
+    $('.button').on('click', confirm);
+    $('.edit').on('click', deleteUConfirm);
 
 })

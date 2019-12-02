@@ -25,75 +25,19 @@ function rankPower(){
     return $rank;
 }
 
-function checkFormData($username, $data, $email, $firstname, $lastname,$error){
-    if(strlen($username) > USERNAME_MAX){
-        $error['username'] = 'Le nom d\'utilisateur est trop long (maximum ' . USERNAME_MAX . ' caractères)';
-        $error['error'] = 'true';
-    }
-    else if (strlen($username) < USERNAME_MIN){
-        $error['username'] = 'Le nom d\'utilisateur est trop court (minimum ' . USERNAME_MIN . ' caractères)';
-        $error['error'] = 'true';
-    }
-    else if (ctype_alnum($username) == false){
-        $error['username'] = 'Le nom d\'utilisateur contient des caractères invalide';
-        $error['error'] = 'true';
-    }
-    else if($username == $data['username']){
-        $error['username'] = 'Le nom d\'utilisateur est déjà utilisé';
-        $error['error'] = 'true';  
-    }
-    if($email == $data['email']){
-        $error['email'] = 'L\'email est déjà utilisé';
-        $error['error'] = 'true';
-    }
-    else if(filter_var($email, FILTER_VALIDATE_EMAIL) == false){
-        $error['email'] = 'L\'email est invalide';
-        $error['error'] = 'true';
-    }
-    if (ctype_alpha($firstname) == false || ctype_alpha($lastname) == false){
-        $error['name'] = 'Le nom ou prénom contient des caractères invalide';
-        $error['error'] = 'true';
-    }
-    if(strlen($_POST['password']) < PASSWORD_MIN){
-        $error['password'] = 'Le mot de passe est trop faible (minimum ' . PASSWORD_MIN . ' caractères)';
-        $error['error'] = 'true'; 
-    } 
-    if ($_POST['password'] != $_POST['confirmpass']){
-        $error['password'] = 'Le mot de passe est différent entre les 2 champs';
-        $error['error'] = 'true';
-    }
-    if($_POST['username'] == $_POST['password']){
-        $error['password'] = 'Le mot de passe est similaire au nom d\'utilisateur';
-        $error['error'] = 'true';
-    
-    }
-    return $error;
+function deleteContent($table,$id){
+    $dbh = connexion();
+    $stmt = $dbh->prepare('DELETE FROM ' . $table . ' 
+                            WHERE id = :id');
+    $stmt->bindValue('id', $id);
+    $stmt->execute(); 
 }
 
-function deleteContent($table){
-        if (array_key_exists('id', $_GET)){
-         $id = $_GET['id'];  
-         var_dump($_GET);
-         try{
-             $dbh = connexion();
-             $stmt = $dbh->prepare('DELETE FROM ' . $table . ' 
-                                     WHERE id = :id');
-             $stmt->bindValue('id', $id);
-             $stmt->execute();
-         }
-         catch (PDOException $e) {
-             print "Erreur !: " . $e->getMessage() . "<br/>";
-             die();
-         }
-     } 
-     
-}
-function addImage(){
+function addImage($dir){
     $image = [];
     $image['error'] = '';
     $image['image'] = uniqid().''.basename($_FILES["image"]["name"]);
-    $target_dir = "images/";
-    $target_file = $target_dir.$image['image'];
+    $target_file = $dir.$image['image'];
 
     if (file_exists($target_file)){
         $image['error'] = 'Erreur dans la base de données,réessayer plus tard';
