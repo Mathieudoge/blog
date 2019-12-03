@@ -1,7 +1,7 @@
 <?php
 function isLogged($accessPower){
     if(!isset($_SESSION['logged']) || $_SESSION['logged'] != true || rankPower() < $accessPower){
-        header('Location: index.php');
+        header('Location: ../index.php');
         $error = 'Vous ne pouvez pas accédez a cette page car vous n\'êtes pas connecté ou vous ne disposez pas des droits suffisants';
         return false;
     }
@@ -25,7 +25,8 @@ function rankPower(){
     return $rank;
 }
 
-function deleteContent($table,$id){
+function deleteContent($table,$id,$dir,$row){
+    deleteImage($table,$id,$dir,$row);
     $dbh = connexion();
     $stmt = $dbh->prepare('DELETE FROM ' . $table . ' 
                             WHERE id = :id');
@@ -51,7 +52,19 @@ function addImage($dir){
     }
     return $image;
 }
+function deleteImage($table,$id,$dir,$row){
+    var_dump($table);
+    var_dump($id);
+    var_dump($dir);
+    global $dbh;
+    $stmt = $dbh->prepare('SELECT '. $row .'
+                            FROM '. $table . '
+                            WHERE id = :id');
+    $stmt->bindValue('id', $id);
+    $stmt->execute();
+    $image = $stmt->fetch(PDO::FETCH_ASSOC);
+    unlink($dir.''.$image['image']);
+}
 
 function displayImage($image){
-    
 }

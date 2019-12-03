@@ -51,13 +51,14 @@ if(!isset($_SESSION['logged']) || $_SESSION['logged'] != true){
         else{
             $error = 'Identifiants incorrect';
         }
-    }
+        }
+
 }  
+include('tpl/layout.phtml');
 }
 else{
-    header('Location: http://localhost/blog/admin/index.php');
+    header('Location: index.php');
 }  
 
 
 
-include('tpl/layout.phtml');

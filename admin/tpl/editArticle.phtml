@@ -1,0 +1,57 @@
+<div class="container">
+<div class="row">
+    <div class="card col text-white mb-3 mt-3 p-0">
+        <div class="card-header bg-dark">Formulaire de mise a jour de l'article numéro <?= $article['id'] ?></div>
+        <div class="card-body bg-white text-dark">
+            <?php if($error != ''):?>
+            <div class="alert alert-danger" role="alert">
+            <?= ($error != '')? '<li>'.$error.'</li>': '' ?>
+            </div>
+            <?php endif;?>
+            <form action="editArticle.php" method="POST" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="formGroupExampleInput">Catégorie</label>
+                    <select name="category" id="">
+                    <?php foreach($categories as $category): ?>
+                    <option value="<?= $category['name'] ?>"><?= $category['name'] ?></option>
+                    <?php endforeach ?>
+                    </select>
+                <div class="mb-3">
+                    <label for="validationTextarea">Titre de l'article</label>
+                    <input type="text" name="title" class="form-control" id="formGroupExampleInput" value="<?= $article['title'] ?>" required>
+                </div>
+                <div class="mb-3">
+                    <label for="formGroupExampleInput">Contenue de l'article</label>
+                    <textarea class="form-control" name="content" id="exampleFormControlTextarea1" rows="3" required><?= $article['content'] ?></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="formGroupExampleInput">Sous-titre de l'article</label><small> (falcultatif)</small>
+                    <input type="text" name="substitle" class="form-control" id="formGroupExampleInput" value="<?= $article['substitle'] ?>">
+                </div>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleFormControlFile1">Image</label><small> (falcultatif)</small>
+                    <input type="file" name="image" class="form-control-file" id="exampleFormControlFile1">
+                </div>
+                <div class="mb-3">
+                    <input type="hidden" name="oldImage" class="form-control-file" id="exampleFormControlFile1" value="<?= $article['image'] ?>">
+                </div>
+                <div class="mb-3">
+                    <label for="formGroupExampleInput">Visibilité</label>
+                    <select name="status" id="">
+                        <option value="0">Publique</option>
+                        <option value="1">Privée</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="formGroupExampleInput">TEMPORAIRE</label>
+                    <select name="id" id="">
+                        <option value="<?= $article['id']?>"><?= $article['id']?></option>
+                    </select>
+                </div>
+                <input type="submit" value="Enregistré">
+            </form>
+        </div>
+    </div>
+</div>
+</div>      

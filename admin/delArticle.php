@@ -7,8 +7,9 @@ include('../models/article.php');
 
 try{
     if (isLogged(RANK_AUTHOR) == true && array_key_exists('id', $_GET)){
-        $id = $_GET['id'];  
-        deleteArticle($id);
+        $id = $_GET['id'];
+        $dir =  '../images/articles/';
+        deleteArticle($id,$dir);
         header('Location: listArticle.php');
         exit();
     }    
