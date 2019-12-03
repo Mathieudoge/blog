@@ -14,6 +14,11 @@ $stmt = $dbh->prepare('SELECT *
 $stmt->bindValue('id', $id);
 $stmt->execute();
 $article = $stmt->fetch(PDO::FETCH_ASSOC);
+if($article['status'] == 1){
+    include('tpl/layout.phtml');  
+}
+else{
+    header('Location: index.php');
+}
 
 
-include('tpl/layout.phtml');

@@ -11,7 +11,6 @@ function isLogged($accessPower){
 }
 
 function rankPower(){
-
     switch($_SESSION['user']['rank']){
         case 'ROLE_USER':
             $rank = RANK_USER;
@@ -64,7 +63,4 @@ function deleteImage($table,$id,$dir,$row){
     $stmt->execute();
     $image = $stmt->fetch(PDO::FETCH_ASSOC);
     unlink($dir.''.$image['image']);
-}
-
-function displayImage($image){
 }

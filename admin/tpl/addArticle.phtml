@@ -1,3 +1,9 @@
+<script src="../vendor/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
+<script>
+  tinymce.init({
+    selector: 'textarea'
+  });
+  </script>
 <div class="container">
 <div class="row">
     <div class="card col text-white mb-3 mt-3 p-0">
@@ -22,7 +28,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="formGroupExampleInput">Contenue de l'article</label>
-                    <textarea class="form-control" name="content" id="exampleFormControlTextarea1" rows="3" required></textarea>
+                    <textarea class="form-control" name="content" id="exampleFormControlTextarea1"></textarea>
                 </div>
                 <div class="mb-3">
                     <label for="formGroupExampleInput">Sous-titre de l'article</label><small> (falcultatif)</small>
@@ -36,8 +42,8 @@
                 <div class="mb-3">
                     <label for="formGroupExampleInput">Visibilité</label>
                     <select name="status" id="">
-                        <option value="0">Publique</option>
-                        <option value="1">Privée</option>
+                        <option value="0">Privée</option>
+                        <option value="1">Publique</option>
                     </select>
                 </div>
                 <input type="submit" value="Enregistré">

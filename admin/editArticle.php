@@ -12,10 +12,8 @@ try{
     if(isLogged(RANK_AUTHOR) == true){
         $id = $_GET['id'];
         $article = getArticle($id);
-        var_dump($article);
         $categories = getCategories();
         if(array_key_exists('category', $_POST)){
-            var_dump($_POST);
             $id = $_POST['id'];
             $getCategory = $_POST['category'];
             $title = $_POST['title'];

@@ -17,7 +17,9 @@
 <div class="container">
 <div class="row">
     <div class="col-lg-8 col-md-10 mx-auto">
+    
     <?php foreach($articles as $article): ?>
+    <?php if($article['status'] == 1): ?>
     <div class="post-preview">
         <a href="article.php?id=<?=$article['id']?>">
         <h2 class="post-title">
@@ -32,6 +34,7 @@
         on <?= $article['created_date'] ?></p>
     </div>
     <hr>
+    <?php endif ?>
     <?php endforeach ?>
     <!-- Pager -->
     <div class="clearfix">
